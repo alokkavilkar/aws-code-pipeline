@@ -1,0 +1,30 @@
+version: 0.2
+
+env:
+  parameter-store:
+    DOCKERURL: /app/docker_credentials/docker_url
+    DOCKERUSER: /app/docker_credentials/docker_username
+    DOCKERPASS: /app/docker_credentials/docker_password
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.12
+  pre_build:
+    commands:
+    - ls
+    - pip install -r requirements.txt
+      
+  build:
+    commands:
+    - echo "Building image."
+    - echo $DOCKERPASS | docker login -u $DOCKERUSER --password-stdin $DOCKERURL
+    - docker build -t $DOCKERURL/$DOCKERUSER/"alok-app:latest" .
+    - docker push $DOCKERURL/$DOCKERUSER/alok-app:latest 
+    
+    
+    
+  post_build:
+    commands:
+    - echo "clearing cache up..."
+    
