@@ -12,26 +12,23 @@ phases:
       python: 3.12
   pre_build:
     commands:
-    - ls
-    - pip install -r requirements.txt
+      - ls
+      - pip install -r requirements.txt
       
   build:
     commands:
-    - echo "Building image."
-    - echo $DOCKERPASS | docker login -u $DOCKERUSER --password-stdin $DOCKERURL
-    - docker build -t $DOCKERURL/$DOCKERUSER/"alok-app:latest" .
-    - docker push $DOCKERURL/$DOCKERUSER/alok-app:latest 
+      - echo "Building image."
+      - echo $DOCKERPASS | docker login -u $DOCKERUSER --password-stdin $DOCKERURL
+      - docker build -t $DOCKERURL/$DOCKERUSER/"alok-app:latest" .
+      - docker push $DOCKERURL/$DOCKERUSER/alok-app:latest 
 
-  artifacts:
-    files:
-     - '**/*'
-    base-directory: base_dir
-    name: build-artifact-name
-    discard-paths: no
-    
-    
-    
   post_build:
     commands:
-    - echo "clearing cache up..."
-    
+      - echo "clearing cache up..."
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: base_dir
+  name: build-artifact-name
+  discard-paths: no
