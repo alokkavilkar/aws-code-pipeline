@@ -26,9 +26,3 @@ phases:
     commands:
       - echo "clearing cache up..."
 
-artifacts:
-  files:
-    - '**/*'
-  base-directory: base_dir
-  name: build-artifact-name
-  discard-paths: no
